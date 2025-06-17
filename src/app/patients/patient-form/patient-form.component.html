@@ -1,0 +1,80 @@
+<h2 mat-dialog-title>Patient Information</h2>
+<mat-dialog-content>
+  <form [formGroup]="patientForm" (ngSubmit)="onSubmit()" class="patient-form">
+    <h2>Registro de Paciente</h2>
+
+    <mat-form-field class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" placeholder="Ingrese el nombre">
+      @if (patientForm.get('name')?.hasError('required')) {
+      <mat-error>
+        El nombre es requerido
+      </mat-error>
+      }
+      @if (patientForm.get('name')?.hasError('minlength')) {
+      <mat-error>
+        El nombre debe tener al menos 3 caracteres
+      </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>DNI</mat-label>
+      <input matInput formControlName="dni" placeholder="Ingrese el DNI">
+      @if (patientForm.get('dni')?.hasError('required')) {
+      <mat-error>
+        El DNI es requerido
+      </mat-error>
+      }
+      @if (patientForm.get('dni')?.hasError('pattern')) {
+      <mat-error>
+        El DNI debe tener 8 dígitos
+      </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Fecha de Nacimiento</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="birthDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      @if (patientForm.get('birthDate')?.hasError('required')) {
+      <mat-error>
+        La fecha de nacimiento es requerida
+      </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Dirección</mat-label>
+      <input matInput formControlName="address" placeholder="Ingrese la dirección">
+      @if (patientForm.get('address')?.hasError('required')) {
+      <mat-error>
+        La dirección es requerida
+      </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="Ingrese el email">
+        @if (patientForm.get('email')?.hasError('required')) {
+      <mat-error>
+        El email es requerido
+      </mat-error>
+      }
+      @if (patientForm.get('email')?.hasError('email')) {
+      <mat-error>
+        Ingrese un email válido
+      </mat-error>
+      }
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-button type="button" (click)="onClose()">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!patientForm.valid">
+        Guardar
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>
