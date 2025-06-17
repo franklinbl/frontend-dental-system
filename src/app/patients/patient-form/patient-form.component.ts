@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PatientService } from '../../services/patient.service';
+import { Patient } from '../patient.model';
 
 @Component({
   selector: 'app-patient-form',
@@ -44,7 +45,7 @@ export class PatientFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.patientForm.valid) {
-      this.patientService.create(this.patientForm.value).subscribe(result => {
+      this.patientService.create(this.patientForm.value).subscribe((result: Patient) => {
         this.dialogRef.close(result);
       });
     }
