@@ -1,9 +1,20 @@
 <div class="container mx-auto p-4">
   <h2 class="text-2xl font-bold mb-4">Lista de Pacientes</h2>
 
-  <button mat-stroked-button (click)="addPatient()">
-    Agregar paciente
-  </button>
+  <div class="flex items-center gap-4 mb-4 items-center">
+    <button mat-stroked-button (click)="addPatient()">
+      Agregar paciente
+    </button>
+
+    <mat-form-field class="flex-1">
+      <mat-label>Buscar paciente</mat-label>
+      <input matInput [(ngModel)]="searchTerm" placeholder="Ingrese nombre, DNI o email...">
+    </mat-form-field>
+
+    <button mat-stroked-button (click)="searchPatient()">
+      Buscar paciente
+    </button>
+  </div>
 
   @if (dataSource.length > 0) {
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-5 w-full">

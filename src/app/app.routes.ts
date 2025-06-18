@@ -19,7 +19,7 @@ export const routes: Routes = [
   },
   {
     path: 'patients',
-    loadComponent: () => import('./patients/patient-list/patient-list.component').then(c => c.PatientListComponent)
+    loadChildren: () => import('./patients/patients.routes').then(r => r.PATIENTS_ROUTES)
   },
   {
     path: 'appointments',

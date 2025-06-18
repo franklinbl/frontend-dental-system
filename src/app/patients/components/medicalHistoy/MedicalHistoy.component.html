@@ -1,0 +1,80 @@
+<div class="bg-white rounded-lg shadow p-8 mt-5">
+  <div class="flex items-center mb-6">
+    <div class="flex items-center justify-center w-8 h-8 bg-red-100 rounded-full mr-3">
+      <span class="text-red-600 font-bold text-lg">2</span>
+    </div>
+    <h3 class="text-xl font-semibold">Historia Médica</h3>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+    <div>
+      <div class="text-gray-500 text-sm">¿Está en tratamiento?</div>
+      <div class="font-medium text-base">{{ medicalHistory.isOnTreatment ? 'Sí' : 'No' }}</div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">Detalles del tratamiento</div>
+      <div class="font-medium text-base">{{ medicalHistory.treatmentDetails || '-' }}</div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">¿Alérgico a medicamentos?</div>
+      <div class="font-medium text-base">{{ medicalHistory.allergicToMedication ? 'Sí' : 'No' }}</div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">Detalles de alergia</div>
+      <div class="font-medium text-base">{{ medicalHistory.medicationAllergyDetails || '-' }}</div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">¿Asma?</div>
+      <div class="font-medium text-base">{{ medicalHistory.hasAsthma ? 'Sí' : 'No' }}</div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">¿Propenso a sangrado?</div>
+      <div class="font-medium text-base">{{ medicalHistory.proneToBleeding ? 'Sí' : 'No' }}</div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">¿Antecedentes cardíacos?</div>
+      <div class="font-medium text-base">{{ medicalHistory.heartDiseaseHistory ? 'Sí' : 'No' }}</div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">Detalles cardíacos</div>
+      <div class="font-medium text-base">{{ medicalHistory.heartDiseaseDetails || '-' }}</div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">Presión arterial</div>
+      <div class="font-medium text-base">
+        {{ medicalHistory.bloodPressure === 'high' ? 'Alta' : (medicalHistory.bloodPressure === 'low' ? 'Baja' : 'Normal') }}
+      </div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">¿Complicaciones con anestesia?</div>
+      <div class="font-medium text-base">{{ medicalHistory.anesthesiaComplications ? 'Sí' : 'No' }}</div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">Detalles de anestesia</div>
+      <div class="font-medium text-base">{{ medicalHistory.anesthesiaDetails || '-' }}</div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">¿Diabetes?</div>
+      <div class="font-medium text-base">{{ medicalHistory.diseasesDiabetes ? 'Sí' : 'No' }}</div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">¿Tuberculosis?</div>
+      <div class="font-medium text-base">{{ medicalHistory.diseasesTuberculosis ? 'Sí' : 'No' }}</div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">¿Enfermedad venérea?</div>
+      <div class="font-medium text-base">{{ medicalHistory.diseasesVenereal ? 'Sí' : 'No' }}</div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">¿Trastorno de sangrado?</div>
+      <div class="font-medium text-base">{{ medicalHistory.diseasesBleedingDisorder ? 'Sí' : 'No' }}</div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">¿Gastrointestinal?</div>
+      <div class="font-medium text-base">{{ medicalHistory.diseasesGastrointestinal ? 'Sí' : 'No' }}</div>
+    </div>
+    <div>
+      <div class="text-gray-500 text-sm">¿VIH?</div>
+      <div class="font-medium text-base">{{ medicalHistory.diseasesHiv ? 'Sí' : 'No' }}</div>
+    </div>
+  </div>
+</div>
