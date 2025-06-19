@@ -6,6 +6,7 @@
     <h3 class="text-xl font-semibold">Datos Personales</h3>
   </div>
 
+  @if(patient || isEditing) {
   <form [formGroup]="patientForm" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
     <div>
       <div class="text-gray-500 text-sm">Nombre</div>
@@ -188,6 +189,12 @@
       }
     </div>
   </form>
+  } @else {
+    <div class="text-center py-8">
+      <div class="text-gray-500 text-lg">No hay información personal</div>
+      <div class="text-gray-400 text-sm mt-2">La información personal aparecerá aquí cuando se agregue</div>
+    </div>
+  }
 
   <div class="flex justify-end gap-4 mt-8">
   @if(!isEditing) {
