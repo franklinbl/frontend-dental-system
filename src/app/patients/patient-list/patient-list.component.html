@@ -6,10 +6,14 @@
       Agregar paciente
     </button>
 
-    <mat-form-field class="flex-1">
-      <mat-label>Buscar paciente</mat-label>
-      <input matInput [(ngModel)]="searchTerm" placeholder="Ingrese nombre, DNI o email...">
-    </mat-form-field>
+    <div class="flex-1">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Ingrese nombre, DNI o email..."
+        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
+      >
+    </div>
 
     <button mat-stroked-button (click)="searchPatient()">
       Buscar paciente

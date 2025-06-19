@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatNativeDateModule } from '@angular/material/core';
 import { PatientService } from '../../services/patient.service';
 import { DatePipe } from '@angular/common';
 import { Patient } from '../models/Patient.model';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -17,11 +13,7 @@ import { Router } from '@angular/router';
   imports: [
     MatTableModule,
     MatButtonModule,
-    MatDialogModule,
-    MatNativeDateModule,
     DatePipe,
-    MatFormFieldModule,
-    MatInputModule,
     FormsModule
   ],
   templateUrl: './patient-list.component.html',

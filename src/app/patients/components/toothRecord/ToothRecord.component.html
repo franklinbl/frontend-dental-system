@@ -8,20 +8,20 @@
   <div class="bg-gray-50 rounded-lg p-6">
     <div class="mb-4 text-gray-600">Haga clic en los dientes para marcar como tratados:</div>
     <div class="grid grid-cols-8 gap-4 mb-4">
-      @for (diente of [].constructor(32); track diente; let i = $index) {
+      @for (tooth of [].constructor(32); track $index) {
       <ng-container>
         <button
           type="button"
-          (click)="toggleDiente(i + 1)"
+          (click)="toggleDiente($index + 1)"
           [ngClass]="{
-            'bg-purple-500 text-white': odontogramaSeleccionados.includes(i + 1),
-            'bg-white text-gray-700': !odontogramaSeleccionados.includes(i + 1),
-            'border-2 border-purple-200': odontogramaSeleccionados.includes(i + 1),
-            'border border-gray-300': !odontogramaSeleccionados.includes(i + 1)
+            'bg-purple-500 text-white': odontogramaSeleccionados.includes($index + 1),
+            'bg-white text-gray-700': !odontogramaSeleccionados.includes($index + 1),
+            'border-2 border-purple-200': odontogramaSeleccionados.includes($index + 1),
+            'border border-gray-300': !odontogramaSeleccionados.includes($index + 1)
           }"
           class="w-10 h-10 rounded-full flex items-center justify-center font-semibold focus:outline-none transition cursor-pointer"
         >
-          {{ i + 1 }}
+          {{ $index + 1 }}
         </button>
       </ng-container>
       }
