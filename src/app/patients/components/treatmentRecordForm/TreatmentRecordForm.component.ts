@@ -55,30 +55,44 @@ export class TreatmentRecordFormComponent implements OnInit {
     const date = new Date(dateString);
     if (isNaN(date.getTime())) return '';
 
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+    // Ajustar la fecha para la zona horaria local
+    const localDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+
+    const year = localDate.getFullYear();
+    const month = String(localDate.getMonth() + 1).padStart(2, '0');
+    const day = String(localDate.getDate()).padStart(2, '0');
 
     return `${year}-${month}-${day}`;
   }
 
   onSubmit(): void {
     if (this.treatmentForm.valid) {
+      // Obtener la fecha del formulario y convertirla correctamente
+      const formDate = this.treatmentForm.get('date')?.value;
+      let formattedDate = formDate;
+
+      if (formDate) {
+        // Crear una fecha local para evitar problemas de zona horaria
+        const [year, month, day] = formDate.split('-');
+        // Crear fecha en zona horaria local
+        const localDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), 12, 0, 0);
+        formattedDate = localDate.toISOString();
+      }
+
       const formData = {
         ...this.treatmentForm.value,
+        date: formattedDate,
         patientId: this.data.patientId
       };
 
       if (this.data.treatmentRecord && this.data.isEditMode && this.data.treatmentRecord.id) {
         // Modo edición - actualizar registro existente
         this.treatmentRecordService.update(this.data.treatmentRecord.id.toString(), formData).subscribe((response) => {
-          console.log('Registro actualizado:', response);
           this.dialogRef.close(response);
         });
       } else {
         // Modo creación - crear nuevo registro
         this.treatmentRecordService.create(formData).subscribe((response) => {
-          console.log('Nuevo registro:', response);
           this.dialogRef.close(response);
         });
       }

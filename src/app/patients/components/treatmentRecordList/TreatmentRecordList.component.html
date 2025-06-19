@@ -41,7 +41,7 @@
           @for(treatmentRecord of treatmentRecord; track treatmentRecord.id) {
             <tr class="hover:bg-gray-50 transition-colors duration-200">
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {{ treatmentRecord.date | date }}
+                {{ treatmentRecord.date | date:'dd/MM/yyyy' }}
               </td>
               <td class="px-6 py-4 text-sm text-gray-900">
                 <div class="max-w-xs truncate" title="{{ treatmentRecord.treatmentDescription }}">

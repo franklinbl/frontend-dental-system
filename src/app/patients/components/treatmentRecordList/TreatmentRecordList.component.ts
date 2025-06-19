@@ -24,7 +24,6 @@ export class TreatmentRecordListComponent implements OnInit {
     if (!patientId) return;
     this.treatmentRecordService.getByPatientId(patientId).subscribe(result => {
       this.treatmentRecord = result;
-      console.log(result);
     });
   }
 
@@ -54,7 +53,6 @@ export class TreatmentRecordListComponent implements OnInit {
           }
         } else {
           // Modo creación - agregar nuevo registro al inicio
-          console.log('Nuevo tratamiento:', result);
           this.treatmentRecord.unshift(result);
         }
       }
