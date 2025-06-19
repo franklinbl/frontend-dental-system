@@ -4,7 +4,7 @@ import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PatientService } from '../../../services/patient.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-personal-information',
@@ -17,6 +17,7 @@ export class PersonalInformationComponent implements OnInit {
   patient: Patient = null as unknown as Patient;
   isEditing: boolean = false;
   patientForm: FormGroup;
+  patientId: string | null = null;
 
   // patient: Patient = {
   //   id: 1,
@@ -34,7 +35,11 @@ export class PersonalInformationComponent implements OnInit {
   //   age: 35,
   // };
 
-  constructor(private fb: FormBuilder, private patientService: PatientService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private patientService: PatientService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router) {
     this.patientForm = this.fb.group({
       name: ['', [Validators.required]],
       dni: ['', [Validators.required]],
@@ -52,7 +57,12 @@ export class PersonalInformationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.patient);
+    this.patientId = this.activatedRoute.snapshot.params['id'];
+    if (this.patientId) {
+      this.patientService.getById(this.patientId).subscribe(result => {
+        this.patient = result;
+      });
+    }
   }
 
   startEditing(): void {
@@ -80,19 +90,26 @@ export class PersonalInformationComponent implements OnInit {
 
   saveChanges(): void {
     if (this.patientForm.valid) {
-      this.patientService.create(this.patientForm.value).subscribe({
-        next: (response) => {
-          console.log('Datos guardados:', response);
-          this.patient = response;
-          this.isEditing = false;
-          this.router.navigate(['/patients'], { queryParams: { id: response.id } });
-        },
-        error: (error) => {
-          console.error('Error al guardar:', error);
-        }
-      });
+      if (this.patientId) {
+        this.patientService.update(this.patientId, this.patientForm.value).subscribe({
+          next: (response) => {
+            this.patient = response;
+            this.isEditing = false;
+          }
+        });
+      } else {
+        this.patientService.create(this.patientForm.value).subscribe({
+          next: (response) => {
+            this.patient = response;
+            this.isEditing = false;
+            this.router.navigate(['/patients/view', response.id]);
+          },
+          error: (error) => {
+            console.error('Error al guardar:', error);
+          }
+        });
+      }
     } else {
-      console.log('Formulario inválido:', this.patientForm.errors);
       this.markFormGroupTouched();
     }
   }

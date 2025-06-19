@@ -190,13 +190,13 @@
   </form>
 
   <div class="flex justify-end gap-4 mt-8">
-    @if(!patient && !isEditing) {
+  @if(!isEditing) {
     <button
       type="button"
       (click)="startEditing()"
       class="bg-blue-200 hover:bg-blue-600 text-gray-800 hover:text-white font-semibold py-2 px-4 rounded transition cursor-pointer"
     >
-      Agregar datos
+      {{patientId ? 'Editar información' : 'Agregar información'}}
     </button>
   }
   @if(isEditing) {
@@ -213,15 +213,6 @@
       class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded transition cursor-pointer"
     >
       Cancelar
-    </button>
-  }
-  @if(patient && !isEditing) {
-    <button
-      type="button"
-      (click)="startEditing()"
-      class="bg-yellow-200 hover:bg-yellow-600 text-gray-800 hover:text-white font-semibold py-2 px-4 rounded transition cursor-pointer"
-    >
-      Editar datos
     </button>
   }
   </div>

@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./patient-list.component.scss']
 })
 export class PatientListComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'dni', 'birthdate', 'address', 'email'];
+  displayedColumns: string[] = ['name', 'dni', 'birthdate', 'address', 'email', 'actions'];
   dataSource: Patient[] = [];
   searchTerm: string = '';
 
@@ -34,6 +34,10 @@ export class PatientListComponent implements OnInit {
 
   addPatient(): void {
     this.router.navigate(['/patients/add']);
+  }
+
+  viewPatient(patient: Patient): void {
+    this.router.navigate(['/patients/view', patient.id]);
   }
 
   searchPatient(): void {

@@ -52,6 +52,16 @@
       <td mat-cell *matCellDef="let patient"> {{patient.email}} </td>
     </ng-container>
 
+    <!-- Acciones -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let patient">
+        <button mat-stroked-button (click)="viewPatient(patient)" class="text-blue-600">
+          Ver
+        </button>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>

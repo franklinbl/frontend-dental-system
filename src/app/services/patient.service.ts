@@ -13,7 +13,7 @@ export class PatientService {
     return this.http.get<Patient[]>(this.apiUrl);
   }
 
-  getById(id: number): Observable<Patient> {
+  getById(id: string): Observable<Patient> {
     return this.http.get<Patient>(`${this.apiUrl}/${id}`);
   }
 
@@ -21,7 +21,7 @@ export class PatientService {
     return this.http.post<Patient>(this.apiUrl, patient);
   }
 
-  update(id: number, patient: Patient): Observable<Patient> {
+  update(id: string, patient: Patient): Observable<Patient> {
     return this.http.put<Patient>(`${this.apiUrl}/${id}`, patient);
   }
 
