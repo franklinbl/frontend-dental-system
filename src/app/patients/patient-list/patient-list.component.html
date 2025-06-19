@@ -2,7 +2,7 @@
   <h2 class="text-2xl font-bold mb-4">Lista de Pacientes</h2>
 
   <div class="flex items-center gap-4 mb-4 items-center">
-    <button mat-stroked-button (click)="addPatient()">
+    <button (click)="addPatient()" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow cursor-pointer">
       Agregar paciente
     </button>
 
@@ -15,7 +15,7 @@
       >
     </div>
 
-    <button mat-stroked-button (click)="searchPatient()">
+    <button (click)="searchPatient()" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow cursor-pointer">
       Buscar paciente
     </button>
   </div>
@@ -56,7 +56,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let patient">
-        <button mat-stroked-button (click)="viewPatient(patient)" class="text-blue-600">
+        <button (click)="viewPatient(patient)" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow cursor-pointer">
           Ver
         </button>
       </td>

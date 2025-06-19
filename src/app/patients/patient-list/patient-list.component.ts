@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
 import { PatientService } from '../../services/patient.service';
 import { DatePipe } from '@angular/common';
 import { Patient } from '../models/Patient.model';
@@ -12,7 +11,6 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [
     MatTableModule,
-    MatButtonModule,
     DatePipe,
     FormsModule
   ],
