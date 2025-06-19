@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 import { Patient } from '../../models/Patient.model';
 import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -14,10 +14,10 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./personalInformation.component.scss']
 })
 export class PersonalInformationComponent implements OnInit {
+  patientId = input<string | null>();
   patient: Patient = null as unknown as Patient;
   isEditing: boolean = false;
   patientForm: FormGroup;
-  patientId: string | null = null;
 
   // patient: Patient = {
   //   id: 1,
@@ -57,9 +57,9 @@ export class PersonalInformationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.patientId = this.activatedRoute.snapshot.params['id'];
-    if (this.patientId) {
-      this.patientService.getById(this.patientId).subscribe(result => {
+    const id = this.patientId();
+    if (id) {
+      this.patientService.getById(id).subscribe(result => {
         this.patient = result;
       });
     }
@@ -90,8 +90,9 @@ export class PersonalInformationComponent implements OnInit {
 
   saveChanges(): void {
     if (this.patientForm.valid) {
-      if (this.patientId) {
-        this.patientService.update(this.patientId, this.patientForm.value).subscribe({
+      const id = this.patientId();
+      if (id) {
+        this.patientService.update(id, this.patientForm.value).subscribe({
           next: (response) => {
             this.patient = response;
             this.isEditing = false;
@@ -122,23 +123,25 @@ export class PersonalInformationComponent implements OnInit {
   private markFormGroupTouched(): void {
     Object.keys(this.patientForm.controls).forEach(key => {
       const control = this.patientForm.get(key);
-      control?.markAsTouched();
+      if (control) {
+        control.markAsTouched();
+      }
     });
   }
 
   getFieldError(fieldName: string): string {
     const field = this.patientForm.get(fieldName);
-    if (field?.invalid && field?.touched) {
-      if (field.errors?.['required']) {
+    if (field && field.invalid && field.touched) {
+      if (field.errors && field.errors['required']) {
         return 'Este campo es requerido';
       }
-      if (field.errors?.['email']) {
+      if (field.errors && field.errors['email']) {
         return 'Ingrese un email válido';
       }
-      if (field.errors?.['min']) {
+      if (field.errors && field.errors['min']) {
         return `El valor mínimo es ${field.errors['min'].min}`;
       }
-      if (field.errors?.['max']) {
+      if (field.errors && field.errors['max']) {
         return `El valor máximo es ${field.errors['max'].max}`;
       }
     }

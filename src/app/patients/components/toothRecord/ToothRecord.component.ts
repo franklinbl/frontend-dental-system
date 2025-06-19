@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 import { NgClass } from '@angular/common';
 
 @Component({
@@ -9,6 +9,7 @@ import { NgClass } from '@angular/common';
   styleUrls: ['./toothRecord.component.scss']
 })
 export class ToothRecordComponent implements OnInit {
+  patientId = input<string | null>();
   odontogramaSeleccionados: number[] = [];
 
   constructor() {}

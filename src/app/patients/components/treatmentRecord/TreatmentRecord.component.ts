@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 import { TreatmentRecord } from '../../models/TreatmentRecord.model';
 
@@ -10,6 +10,7 @@ import { TreatmentRecord } from '../../models/TreatmentRecord.model';
   styleUrls: ['./treatmentRecord.component.scss']
 })
 export class TreatmentRecordComponent implements OnInit {
+  patientId = input<string | null>();
   treatmentRecord: TreatmentRecord = {
     id: 1,
     patientId: 1,

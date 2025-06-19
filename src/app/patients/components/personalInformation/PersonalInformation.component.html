@@ -14,14 +14,14 @@
           type="text"
           formControlName="name"
           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-300"
-          [class.border-red-500]="patientForm.get('name')?.invalid && patientForm.get('name')?.touched"
+          [class.border-red-500]="patientForm.get('name') && patientForm.get('name')!.invalid && patientForm.get('name')!.touched"
           placeholder="Ingrese el nombre"
         >
         @if(getFieldError('name')) {
           <div class="text-red-500 text-xs mt-1">{{ getFieldError('name') }}</div>
         }
       } @else {
-        <div class="font-medium text-base">{{ patient?.name || '-' }}</div>
+        <div class="font-medium text-base">{{ patient ? patient.name || '-' : '-' }}</div>
       }
     </div>
     <div>
@@ -31,14 +31,14 @@
           type="text"
           formControlName="dni"
           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-300"
-          [class.border-red-500]="patientForm.get('dni')?.invalid && patientForm.get('dni')?.touched"
+          [class.border-red-500]="patientForm.get('dni') && patientForm.get('dni')!.invalid && patientForm.get('dni')!.touched"
           placeholder="Ingrese el DNI"
         >
         @if(getFieldError('dni')) {
           <div class="text-red-500 text-xs mt-1">{{ getFieldError('dni') }}</div>
         }
       } @else {
-        <div class="font-medium text-base">{{ patient?.dni || '-' }}</div>
+        <div class="font-medium text-base">{{ patient ? patient.dni || '-' : '-' }}</div>
       }
     </div>
     <div>
@@ -51,7 +51,7 @@
           placeholder="Ingrese el nombre del representante"
         >
       } @else {
-        <div class="font-medium text-base">{{ patient?.legalGuardianName || '-' }}</div>
+        <div class="font-medium text-base">{{ patient ? patient.legalGuardianName || '-' : '-' }}</div>
       }
     </div>
     <div>
@@ -64,7 +64,7 @@
           placeholder="Ingrese el DNI del representante"
         >
       } @else {
-        <div class="font-medium text-base">{{ patient?.legalGuardianDni || '-' }}</div>
+        <div class="font-medium text-base">{{ patient ? patient.legalGuardianDni || '-' : '-' }}</div>
       }
     </div>
     <div>
@@ -81,7 +81,7 @@
         </select>
       } @else {
         <div class="font-medium text-base">
-          {{ patient?.gender === 'male' ? 'Masculino' : (patient?.gender === 'female' ? 'Femenino' : (patient?.gender === 'other' ? 'Otro' : '-')) }}
+          {{ patient ? (patient.gender === 'male' ? 'Masculino' : (patient.gender === 'female' ? 'Femenino' : (patient.gender === 'other' ? 'Otro' : '-'))) : '-' }}
         </div>
       }
     </div>
@@ -92,14 +92,14 @@
           type="number"
           formControlName="age"
           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-300"
-          [class.border-red-500]="patientForm.get('age')?.invalid && patientForm.get('age')?.touched"
+          [class.border-red-500]="patientForm.get('age') && patientForm.get('age')!.invalid && patientForm.get('age')!.touched"
           placeholder="Ingrese la edad"
         >
         @if(getFieldError('age')) {
           <div class="text-red-500 text-xs mt-1">{{ getFieldError('age') }}</div>
         }
       } @else {
-        <div class="font-medium text-base">{{ patient?.age || '-' }}</div>
+        <div class="font-medium text-base">{{ patient ? patient.age || '-' : '-' }}</div>
       }
     </div>
     <div>
@@ -112,7 +112,7 @@
           placeholder="Ingrese la ocupación"
         >
       } @else {
-        <div class="font-medium text-base">{{ patient?.occupation || '-' }}</div>
+        <div class="font-medium text-base">{{ patient ? patient.occupation || '-' : '-' }}</div>
       }
     </div>
     <div>
@@ -125,7 +125,7 @@
           placeholder="Ingrese la dirección"
         >
       } @else {
-        <div class="font-medium text-base">{{ patient?.address || '-' }}</div>
+        <div class="font-medium text-base">{{ patient ? patient.address || '-' : '-' }}</div>
       }
     </div>
     <div>
@@ -138,7 +138,7 @@
           placeholder="Ingrese el teléfono"
         >
       } @else {
-        <div class="font-medium text-base">{{ patient?.phone || '-' }}</div>
+        <div class="font-medium text-base">{{ patient ? patient.phone || '-' : '-' }}</div>
       }
     </div>
     <div>
@@ -151,7 +151,7 @@
           placeholder="Ingrese el teléfono fijo"
         >
       } @else {
-        <div class="font-medium text-base">{{ patient?.landlinePhone || '-' }}</div>
+        <div class="font-medium text-base">{{ patient ? patient.landlinePhone || '-' : '-' }}</div>
       }
     </div>
     <div>
@@ -161,14 +161,14 @@
           type="email"
           formControlName="email"
           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-300"
-          [class.border-red-500]="patientForm.get('email')?.invalid && patientForm.get('email')?.touched"
+          [class.border-red-500]="patientForm.get('email') && patientForm.get('email')!.invalid && patientForm.get('email')!.touched"
           placeholder="Ingrese el correo"
         >
         @if(getFieldError('email')) {
           <div class="text-red-500 text-xs mt-1">{{ getFieldError('email') }}</div>
         }
       } @else {
-        <div class="font-medium text-base">{{ patient?.email || '-' }}</div>
+        <div class="font-medium text-base">{{ patient ? patient.email || '-' : '-' }}</div>
       }
     </div>
     <div>
@@ -178,13 +178,13 @@
           type="date"
           formControlName="birthDate"
           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-300"
-          [class.border-red-500]="patientForm.get('birthDate')?.invalid && patientForm.get('birthDate')?.touched"
+          [class.border-red-500]="patientForm.get('birthDate') && patientForm.get('birthDate')!.invalid && patientForm.get('birthDate')!.touched"
         >
         @if(getFieldError('birthDate')) {
           <div class="text-red-500 text-xs mt-1">{{ getFieldError('birthDate') }}</div>
         }
       } @else {
-        <div class="font-medium text-base">{{ patient?.birthDate ? (patient?.birthDate | date:'dd/MM/yyyy') : '-' }}</div>
+        <div class="font-medium text-base">{{ patient ? (patient.birthDate ? (patient.birthDate | date:'dd/MM/yyyy') : '-') : '-' }}</div>
       }
     </div>
   </form>
@@ -196,7 +196,7 @@
       (click)="startEditing()"
       class="bg-blue-200 hover:bg-blue-600 text-gray-800 hover:text-white font-semibold py-2 px-4 rounded transition cursor-pointer"
     >
-      {{patientId ? 'Editar información' : 'Agregar información'}}
+      {{patientId() ? 'Editar información' : 'Agregar información'}}
     </button>
   }
   @if(isEditing) {

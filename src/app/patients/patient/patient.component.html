@@ -6,14 +6,14 @@
   </div>
 
   <!-- Card de datos personales -->
-  <app-personal-information></app-personal-information>
+  <app-personal-information [patientId]="patientId()"></app-personal-information>
 
   <!-- Card de historial médico -->
-  <app-medical-histoy></app-medical-histoy>
+  <app-medical-histoy [patientId]="patientId()"></app-medical-histoy>
 
   <!-- Card de tratamiento -->
-  <app-treatment-record></app-treatment-record>
+  <app-treatment-record [patientId]="patientId()"></app-treatment-record>
 
   <!-- Card de odontograma -->
-  <app-tooth-record></app-tooth-record>
+  <app-tooth-record [patientId]="patientId()"></app-tooth-record>
 </div>

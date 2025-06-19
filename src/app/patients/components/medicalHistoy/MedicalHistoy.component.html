@@ -5,76 +5,349 @@
     </div>
     <h3 class="text-xl font-semibold">Historia Médica</h3>
   </div>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+
+  <form [formGroup]="medicalHistoryForm" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
     <div>
       <div class="text-gray-500 text-sm">¿Está en tratamiento?</div>
-      <div class="font-medium text-base">{{ medicalHistory.isOnTreatment ? 'Sí' : 'No' }}</div>
+      @if(isEditing) {
+        <div class="flex gap-4 mt-2">
+          <label class="flex items-center">
+            <input type="radio" formControlName="isOnTreatment" [value]="false" class="mr-2">
+            <span>No</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" formControlName="isOnTreatment" [value]="true" class="mr-2">
+            <span>Sí</span>
+          </label>
+        </div>
+        @if(getFieldError('isOnTreatment')) {
+          <div class="text-red-500 text-xs mt-1">{{ getFieldError('isOnTreatment') }}</div>
+        }
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.isOnTreatment ? 'Sí' : 'No') : '-' }}</div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">Detalles del tratamiento</div>
-      <div class="font-medium text-base">{{ medicalHistory.treatmentDetails || '-' }}</div>
+      @if(isEditing) {
+        <textarea
+          formControlName="treatmentDetails"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-300"
+          placeholder="Ingrese detalles del tratamiento"
+          rows="2"
+        ></textarea>
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.treatmentDetails || '-') : '-' }}</div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">¿Alérgico a medicamentos?</div>
-      <div class="font-medium text-base">{{ medicalHistory.allergicToMedication ? 'Sí' : 'No' }}</div>
+      @if(isEditing) {
+        <div class="flex gap-4 mt-2">
+          <label class="flex items-center">
+            <input type="radio" formControlName="allergicToMedication" [value]="false" class="mr-2">
+            <span>No</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" formControlName="allergicToMedication" [value]="true" class="mr-2">
+            <span>Sí</span>
+          </label>
+        </div>
+        @if(getFieldError('allergicToMedication')) {
+          <div class="text-red-500 text-xs mt-1">{{ getFieldError('allergicToMedication') }}</div>
+        }
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.allergicToMedication ? 'Sí' : 'No') : '-' }}</div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">Detalles de alergia</div>
-      <div class="font-medium text-base">{{ medicalHistory.medicationAllergyDetails || '-' }}</div>
+      @if(isEditing) {
+        <textarea
+          formControlName="medicationAllergyDetails"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-300"
+          placeholder="Ingrese detalles de la alergia"
+          rows="2"
+        ></textarea>
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.medicationAllergyDetails || '-') : '-' }}</div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">¿Asma?</div>
-      <div class="font-medium text-base">{{ medicalHistory.hasAsthma ? 'Sí' : 'No' }}</div>
+      @if(isEditing) {
+        <div class="flex gap-4 mt-2">
+          <label class="flex items-center">
+            <input type="radio" formControlName="hasAsthma" [value]="false" class="mr-2">
+            <span>No</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" formControlName="hasAsthma" [value]="true" class="mr-2">
+            <span>Sí</span>
+          </label>
+        </div>
+        @if(getFieldError('hasAsthma')) {
+          <div class="text-red-500 text-xs mt-1">{{ getFieldError('hasAsthma') }}</div>
+        }
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.hasAsthma ? 'Sí' : 'No') : '-' }}</div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">¿Propenso a sangrado?</div>
-      <div class="font-medium text-base">{{ medicalHistory.proneToBleeding ? 'Sí' : 'No' }}</div>
+      @if(isEditing) {
+        <div class="flex gap-4 mt-2">
+          <label class="flex items-center">
+            <input type="radio" formControlName="proneToBleeding" [value]="false" class="mr-2">
+            <span>No</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" formControlName="proneToBleeding" [value]="true" class="mr-2">
+            <span>Sí</span>
+          </label>
+        </div>
+        @if(getFieldError('proneToBleeding')) {
+          <div class="text-red-500 text-xs mt-1">{{ getFieldError('proneToBleeding') }}</div>
+        }
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.proneToBleeding ? 'Sí' : 'No') : '-' }}</div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">¿Antecedentes cardíacos?</div>
-      <div class="font-medium text-base">{{ medicalHistory.heartDiseaseHistory ? 'Sí' : 'No' }}</div>
+      @if(isEditing) {
+        <div class="flex gap-4 mt-2">
+          <label class="flex items-center">
+            <input type="radio" formControlName="heartDiseaseHistory" [value]="false" class="mr-2">
+            <span>No</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" formControlName="heartDiseaseHistory" [value]="true" class="mr-2">
+            <span>Sí</span>
+          </label>
+        </div>
+        @if(getFieldError('heartDiseaseHistory')) {
+          <div class="text-red-500 text-xs mt-1">{{ getFieldError('heartDiseaseHistory') }}</div>
+        }
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.heartDiseaseHistory ? 'Sí' : 'No') : '-' }}</div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">Detalles cardíacos</div>
-      <div class="font-medium text-base">{{ medicalHistory.heartDiseaseDetails || '-' }}</div>
+      @if(isEditing) {
+        <textarea
+          formControlName="heartDiseaseDetails"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-300"
+          placeholder="Ingrese detalles cardíacos"
+          rows="2"
+        ></textarea>
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.heartDiseaseDetails || '-') : '-' }}</div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">Presión arterial</div>
-      <div class="font-medium text-base">
-        {{ medicalHistory.bloodPressure === 'high' ? 'Alta' : (medicalHistory.bloodPressure === 'low' ? 'Baja' : 'Normal') }}
-      </div>
+      @if(isEditing) {
+        <select
+          formControlName="bloodPressure"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+        >
+          <option value="normal">Normal</option>
+          <option value="high">Alta</option>
+          <option value="low">Baja</option>
+        </select>
+        @if(getFieldError('bloodPressure')) {
+          <div class="text-red-500 text-xs mt-1">{{ getFieldError('bloodPressure') }}</div>
+        }
+      } @else {
+        <div class="font-medium text-base">
+          {{ medicalHistory ? (medicalHistory.bloodPressure === 'high' ? 'Alta' : (medicalHistory.bloodPressure === 'low' ? 'Baja' : 'Normal')) : '-' }}
+        </div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">¿Complicaciones con anestesia?</div>
-      <div class="font-medium text-base">{{ medicalHistory.anesthesiaComplications ? 'Sí' : 'No' }}</div>
+      @if(isEditing) {
+        <div class="flex gap-4 mt-2">
+          <label class="flex items-center">
+            <input type="radio" formControlName="anesthesiaComplications" [value]="false" class="mr-2">
+            <span>No</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" formControlName="anesthesiaComplications" [value]="true" class="mr-2">
+            <span>Sí</span>
+          </label>
+        </div>
+        @if(getFieldError('anesthesiaComplications')) {
+          <div class="text-red-500 text-xs mt-1">{{ getFieldError('anesthesiaComplications') }}</div>
+        }
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.anesthesiaComplications ? 'Sí' : 'No') : '-' }}</div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">Detalles de anestesia</div>
-      <div class="font-medium text-base">{{ medicalHistory.anesthesiaDetails || '-' }}</div>
+      @if(isEditing) {
+        <textarea
+          formControlName="anesthesiaDetails"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-300"
+          placeholder="Ingrese detalles de anestesia"
+          rows="2"
+        ></textarea>
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.anesthesiaDetails || '-') : '-' }}</div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">¿Diabetes?</div>
-      <div class="font-medium text-base">{{ medicalHistory.diseasesDiabetes ? 'Sí' : 'No' }}</div>
+      @if(isEditing) {
+        <div class="flex gap-4 mt-2">
+          <label class="flex items-center">
+            <input type="radio" formControlName="diseasesDiabetes" [value]="false" class="mr-2">
+            <span>No</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" formControlName="diseasesDiabetes" [value]="true" class="mr-2">
+            <span>Sí</span>
+          </label>
+        </div>
+        @if(getFieldError('diseasesDiabetes')) {
+          <div class="text-red-500 text-xs mt-1">{{ getFieldError('diseasesDiabetes') }}</div>
+        }
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.diseasesDiabetes ? 'Sí' : 'No') : '-' }}</div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">¿Tuberculosis?</div>
-      <div class="font-medium text-base">{{ medicalHistory.diseasesTuberculosis ? 'Sí' : 'No' }}</div>
+      @if(isEditing) {
+        <div class="flex gap-4 mt-2">
+          <label class="flex items-center">
+            <input type="radio" formControlName="diseasesTuberculosis" [value]="false" class="mr-2">
+            <span>No</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" formControlName="diseasesTuberculosis" [value]="true" class="mr-2">
+            <span>Sí</span>
+          </label>
+        </div>
+        @if(getFieldError('diseasesTuberculosis')) {
+          <div class="text-red-500 text-xs mt-1">{{ getFieldError('diseasesTuberculosis') }}</div>
+        }
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.diseasesTuberculosis ? 'Sí' : 'No') : '-' }}</div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">¿Enfermedad venérea?</div>
-      <div class="font-medium text-base">{{ medicalHistory.diseasesVenereal ? 'Sí' : 'No' }}</div>
+      @if(isEditing) {
+        <div class="flex gap-4 mt-2">
+          <label class="flex items-center">
+            <input type="radio" formControlName="diseasesVenereal" [value]="false" class="mr-2">
+            <span>No</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" formControlName="diseasesVenereal" [value]="true" class="mr-2">
+            <span>Sí</span>
+          </label>
+        </div>
+        @if(getFieldError('diseasesVenereal')) {
+          <div class="text-red-500 text-xs mt-1">{{ getFieldError('diseasesVenereal') }}</div>
+        }
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.diseasesVenereal ? 'Sí' : 'No') : '-' }}</div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">¿Trastorno de sangrado?</div>
-      <div class="font-medium text-base">{{ medicalHistory.diseasesBleedingDisorder ? 'Sí' : 'No' }}</div>
+      @if(isEditing) {
+        <div class="flex gap-4 mt-2">
+          <label class="flex items-center">
+            <input type="radio" formControlName="diseasesBleedingDisorder" [value]="false" class="mr-2">
+            <span>No</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" formControlName="diseasesBleedingDisorder" [value]="true" class="mr-2">
+            <span>Sí</span>
+          </label>
+        </div>
+        @if(getFieldError('diseasesBleedingDisorder')) {
+          <div class="text-red-500 text-xs mt-1">{{ getFieldError('diseasesBleedingDisorder') }}</div>
+        }
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.diseasesBleedingDisorder ? 'Sí' : 'No') : '-' }}</div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">¿Gastrointestinal?</div>
-      <div class="font-medium text-base">{{ medicalHistory.diseasesGastrointestinal ? 'Sí' : 'No' }}</div>
+      @if(isEditing) {
+        <div class="flex gap-4 mt-2">
+          <label class="flex items-center">
+            <input type="radio" formControlName="diseasesGastrointestinal" [value]="false" class="mr-2">
+            <span>No</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" formControlName="diseasesGastrointestinal" [value]="true" class="mr-2">
+            <span>Sí</span>
+          </label>
+        </div>
+        @if(getFieldError('diseasesGastrointestinal')) {
+          <div class="text-red-500 text-xs mt-1">{{ getFieldError('diseasesGastrointestinal') }}</div>
+        }
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.diseasesGastrointestinal ? 'Sí' : 'No') : '-' }}</div>
+      }
     </div>
     <div>
       <div class="text-gray-500 text-sm">¿VIH?</div>
-      <div class="font-medium text-base">{{ medicalHistory.diseasesHiv ? 'Sí' : 'No' }}</div>
+      @if(isEditing) {
+        <div class="flex gap-4 mt-2">
+          <label class="flex items-center">
+            <input type="radio" formControlName="diseasesHiv" [value]="false" class="mr-2">
+            <span>No</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" formControlName="diseasesHiv" [value]="true" class="mr-2">
+            <span>Sí</span>
+          </label>
+        </div>
+        @if(getFieldError('diseasesHiv')) {
+          <div class="text-red-500 text-xs mt-1">{{ getFieldError('diseasesHiv') }}</div>
+        }
+      } @else {
+        <div class="font-medium text-base">{{ medicalHistory ? (medicalHistory.diseasesHiv ? 'Sí' : 'No') : '-' }}</div>
+      }
     </div>
-  </div>
+  </form>
+
+  @if(patientId()) {
+    <div class="flex justify-end gap-4 mt-8">
+    @if(!isEditing) {
+      <button
+        type="button"
+        (click)="startEditing()"
+        class="bg-red-200 hover:bg-red-600 text-gray-800 hover:text-white font-semibold py-2 px-4 rounded transition cursor-pointer"
+      >
+        {{medicalHistory ? 'Editar información' : 'Agregar información'}}
+      </button>
+    }
+    @if(isEditing) {
+      <button
+        type="button"
+        (click)="saveChanges()"
+        class="bg-green-200 hover:bg-green-600 text-gray-800 hover:text-white font-semibold py-2 px-4 rounded transition cursor-pointer"
+      >
+        Guardar
+      </button>
+      <button
+        type="button"
+        (click)="cancelEditing()"
+        class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded transition cursor-pointer"
+      >
+        Cancelar
+      </button>
+    }
+    </div>
+  }
 </div>
