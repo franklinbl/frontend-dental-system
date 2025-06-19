@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { PersonalInformationComponent } from '../components/personalInformation/PersonalInformation.component';
 import { MedicalHistoyComponent } from '../components/medicalHistoy/MedicalHistoy.component';
-import { TreatmentRecordComponent } from '../components/treatmentRecord/TreatmentRecord.component';
+import { TreatmentRecordListComponent } from '../components/treatmentRecordList/TreatmentRecordList.component';
 import { ToothRecordComponent } from '../components/toothRecord/ToothRecord.component';
 import { ActivatedRoute } from '@angular/router';
 
@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
   imports: [
     PersonalInformationComponent,
     MedicalHistoyComponent,
-    TreatmentRecordComponent,
+    TreatmentRecordListComponent,
     ToothRecordComponent
   ],
   templateUrl: './patient.component.html',

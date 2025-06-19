@@ -1,0 +1,93 @@
+<div class="p-6">
+  <h2 class="text-xl font-semibold mb-4">
+    {{ data.isEditMode ? 'Editar Tratamiento' : 'Agregar Tratamiento' }}
+  </h2>
+
+  <form [formGroup]="treatmentForm" (ngSubmit)="onSubmit()">
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Fecha del tratamiento</label>
+        <input
+          type="date"
+          formControlName="date"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder-gray-300"
+          [class.border-red-500]="treatmentForm.get('date') && treatmentForm.get('date')!.invalid && treatmentForm.get('date')!.touched"
+        >
+        @if(getFieldError('date')) {
+          <div class="text-red-500 text-xs mt-1">{{ getFieldError('date') }}</div>
+        }
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Descripción del tratamiento</label>
+        <textarea
+          formControlName="treatmentDescription"
+          rows="3"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 resize-none placeholder-gray-300"
+          [class.border-red-500]="treatmentForm.get('treatmentDescription') && treatmentForm.get('treatmentDescription')!.invalid && treatmentForm.get('treatmentDescription')!.touched"
+          placeholder="Ingrese la descripción del tratamiento"
+        ></textarea>
+        @if(getFieldError('treatmentDescription')) {
+          <div class="text-red-500 text-xs mt-1">{{ getFieldError('treatmentDescription') }}</div>
+        }
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Monto pagado</label>
+          <div class="relative">
+            <input
+              type="number"
+              formControlName="amountPaid"
+              class="w-full px-3 py-2 pr-8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder-gray-300"
+              [class.border-red-500]="treatmentForm.get('amountPaid') && treatmentForm.get('amountPaid')!.invalid && treatmentForm.get('amountPaid')!.touched"
+              placeholder="0.00"
+              step="0.01"
+              min="0"
+            >
+            <span class="absolute right-3 top-2 text-gray-500">$</span>
+          </div>
+          @if(getFieldError('amountPaid')) {
+            <div class="text-red-500 text-xs mt-1">{{ getFieldError('amountPaid') }}</div>
+          }
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Saldo restante</label>
+          <div class="relative">
+            <input
+              type="number"
+              formControlName="remainingBalance"
+              class="w-full px-3 py-2 pr-8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder-gray-300"
+              [class.border-red-500]="treatmentForm.get('remainingBalance') && treatmentForm.get('remainingBalance')!.invalid && treatmentForm.get('remainingBalance')!.touched"
+              placeholder="0.00"
+              step="0.01"
+              min="0"
+            >
+            <span class="absolute right-3 top-2 text-gray-500">$</span>
+          </div>
+          @if(getFieldError('remainingBalance')) {
+            <div class="text-red-500 text-xs mt-1">{{ getFieldError('remainingBalance') }}</div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-end gap-3 mt-6">
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="px-4 py-2 text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors duration-200"
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        [disabled]="treatmentForm.invalid"
+        class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {{ data.isEditMode ? 'Actualizar' : 'Guardar' }}
+      </button>
+    </div>
+  </form>
+</div>

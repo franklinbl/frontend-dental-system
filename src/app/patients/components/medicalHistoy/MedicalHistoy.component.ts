@@ -1,7 +1,7 @@
 import { Component, OnInit, input } from '@angular/core';
 import { MedicalHistory } from '../../models/MedicalHistory.model';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MedicalHistoryService } from '../../../services/medicalHistoryService.service';
+import { MedicalHistoryService } from '../../../services/medicalHistory.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -16,30 +16,6 @@ export class MedicalHistoyComponent implements OnInit {
   medicalHistory: MedicalHistory | null = null;
   isEditing: boolean = false;
   medicalHistoryForm: FormGroup;
-
-  // medicalHistory: MedicalHistory = {
-  //   id: 1,
-  //   patientId: 1,
-  //   isOnTreatment: true,
-  //   treatmentDetails: 'Tratamiento para hipertensión',
-  //   allergicToMedication: false,
-  //   medicationAllergyDetails: null,
-  //   hasAsthma: false,
-  //   proneToBleeding: false,
-  //   heartDiseaseHistory: true,
-  //   heartDiseaseDetails: 'Antecedentes de arritmia',
-  //   bloodPressure: 'normal',
-  //   anesthesiaComplications: false,
-  //   anesthesiaDetails: null,
-  //   diseasesDiabetes: false,
-  //   diseasesTuberculosis: false,
-  //   diseasesVenereal: false,
-  //   diseasesBleedingDisorder: false,
-  //   diseasesGastrointestinal: true,
-  //   diseasesHiv: false,
-  //   createdAt: '2024-06-01T10:00:00Z',
-  //   updatedAt: '2024-06-01T10:00:00Z'
-  // };
 
   constructor(private fb: FormBuilder, private medicalHistoryService: MedicalHistoryService) {
     this.medicalHistoryForm = this.fb.group({
