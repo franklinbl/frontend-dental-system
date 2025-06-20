@@ -1,8 +1,8 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { PersonalInformationComponent } from '../components/personalInformation/PersonalInformation.component';
-import { MedicalHistoyComponent } from '../components/medicalHistoy/MedicalHistoy.component';
-import { TreatmentRecordListComponent } from '../components/treatmentRecordList/TreatmentRecordList.component';
-import { ToothRecordComponent } from '../components/toothRecord/ToothRecord.component';
+import { PersonalInformationComponent } from '../components/personal-information/personal-information.component';
+import { MedicalHistoyComponent } from '../components/medical-histoy/medical-histoy.component';
+import { TreatmentRecordListComponent } from '../components/treatment-record-list/treatment-record-list.component';
+import { ToothRecordComponent } from '../components/tooth-record/tooth-record.component';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

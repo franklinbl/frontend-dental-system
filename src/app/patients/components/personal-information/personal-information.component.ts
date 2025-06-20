@@ -10,8 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router';
   selector: 'app-personal-information',
   standalone: true,
   imports: [DatePipe, ReactiveFormsModule, CommonModule],
-  templateUrl: './personalInformation.component.html',
-  styleUrls: ['./personalInformation.component.scss']
+  templateUrl: './personal-information.component.html',
+  styleUrls: ['./personal-information.component.scss']
 })
 export class PersonalInformationComponent implements OnInit {
   patientId = input<string | null>();

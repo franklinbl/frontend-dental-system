@@ -19,8 +19,8 @@ export interface TreatmentRecordFormData {
     ReactiveFormsModule,
     MatDialogModule
   ],
-  templateUrl: './TreatmentRecordForm.component.html',
-  styleUrls: ['./TreatmentRecordForm.component.scss']
+  templateUrl: './treatment-record-form.component.html',
+  styleUrls: ['./treatment-record-form.component.scss']
 })
 export class TreatmentRecordFormComponent implements OnInit {
   treatmentForm: FormGroup;

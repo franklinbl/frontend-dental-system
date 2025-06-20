@@ -3,15 +3,15 @@ import { DatePipe, CurrencyPipe } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { TreatmentRecord } from '../../models/TreatmentRecord.model';
-import { TreatmentRecordFormComponent } from '../treatmentRecordForm/TreatmentRecordForm.component';
+import { TreatmentRecordFormComponent } from '../treatment-record-form/treatment-record-form.component';
 import { TreatmentRecordService } from '../../../services/treatmentRecord.service';
 
 @Component({
   selector: 'app-treatment-record-list',
   standalone: true,
   imports: [DatePipe, CurrencyPipe, MatDialogModule],
-  templateUrl: './treatmentRecordList.component.html',
-  styleUrls: ['./treatmentRecordList.component.scss']
+  templateUrl: './treatment-record-list.component.html',
+  styleUrls: ['./treatment-record-list.component.scss']
 })
 export class TreatmentRecordListComponent implements OnInit {
   patientId = input<string | null>();

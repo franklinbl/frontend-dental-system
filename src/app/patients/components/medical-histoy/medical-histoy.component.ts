@@ -8,8 +8,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-medical-histoy',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './medicalHistoy.component.html',
-  styleUrls: ['./medicalHistoy.component.scss']
+  templateUrl: './medical-histoy.component.html',
+  styleUrls: ['./medical-histoy.component.scss']
 })
 export class MedicalHistoyComponent implements OnInit {
   patientId = input<string | null>();

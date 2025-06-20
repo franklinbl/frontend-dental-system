@@ -5,8 +5,8 @@ import { NgClass } from '@angular/common';
   selector: 'app-tooth-record',
   standalone: true,
   imports: [NgClass],
-  templateUrl: './toothRecord.component.html',
-  styleUrls: ['./toothRecord.component.scss']
+  templateUrl: './tooth-record.component.html',
+  styleUrls: ['./tooth-record.component.scss']
 })
 export class ToothRecordComponent implements OnInit {
   patientId = input<string | null>();
