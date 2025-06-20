@@ -1,0 +1,13 @@
+<h2 class="text-xl font-semibold mb-4">Detalles del día</h2>
+
+@if(selectedDate) {
+  <div>
+    <h3 class="text-lg mb-2">{{ selectedDate }}</h3>
+    @for(appointment of getAppointmentsForDate(selectedDate); track $index) {
+      <div class="bg-white p-3 rounded shadow mb-2 border border-gray-200">
+        <div class="font-medium">{{ appointment.patient }}</div>
+        <div class="text-sm text-gray-600">{{ appointment.time }}</div>
+      </div>
+    }
+  </div>
+}
