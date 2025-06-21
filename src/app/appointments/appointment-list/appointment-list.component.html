@@ -5,11 +5,13 @@
     <app-calendar-view
       class="w-3/4 pr-4"
       [selectedDate]="selectedDate"
+      [appointments]="appointments"
       (dateSelected)="onDateSelected($event)">
     </app-calendar-view>
     <app-appointment-view
       class="w-1/4 border-l pl-4"
-      [selectedDate]="selectedDate">
+      [selectedDate]="selectedDate"
+      [appointments]="appointments">
     </app-appointment-view>
   </div>
 </div>

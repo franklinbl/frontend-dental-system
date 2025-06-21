@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Appointments } from '../../models/Appointments.model';
 
 @Component({
   selector: 'app-calendar-view',
@@ -10,6 +11,7 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 export class CalendarViewComponent {
   @Output() dateSelected = new EventEmitter<string>();
   @Input() selectedDate: string | null = null;
+  @Input() appointments: Appointments[] = [];
 
   today = new Date();
   currentMonth = this.today.getMonth(); // Enero es 0
@@ -17,14 +19,6 @@ export class CalendarViewComponent {
 
   // Array for calendar grid (6 weeks * 7 days = 42)
   calendarDays = Array.from({ length: 42 }, (_, i) => i);
-
-  // Datos de ejemplo de citas (con formato ISO YYYY-MM-DD)
-  appointments = [
-    { date: '2025-06-05', patient: 'Ana López', time: '10:00 AM' },
-    { date: '2025-06-05', patient: 'Carlos M.', time: '11:00 AM' },
-    { date: '2025-06-10', patient: 'Laura G.', time: '09:30 AM' },
-    { date: '2025-06-15', patient: 'Javier R.', time: '02:00 PM' },
-  ];
 
   getDaysInMonth(month: number, year: number) {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -109,5 +103,15 @@ export class CalendarViewComponent {
     } else {
       this.currentMonth++;
     }
+  }
+
+  goToToday(): void {
+    // Cambiar la vista del calendario al mes y año actual
+    const today = new Date();
+    this.currentMonth = today.getMonth();
+    this.currentYear = today.getFullYear();
+
+    // Emitir la fecha de hoy
+    this.dateSelected.emit(today.toISOString().split('T')[0]);
   }
 }
