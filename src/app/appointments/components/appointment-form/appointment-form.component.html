@@ -1,0 +1,92 @@
+<div class="p-6">
+  <h2 class="text-xl font-semibold mb-4">Agregar Nueva Cita</h2>
+
+  <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+    <div class="space-y-4">
+      <!-- Nombre del paciente -->
+      <div class="w-full">
+        <label for="patient" class="block text-sm font-medium text-gray-700 mb-1">
+          Nombre del paciente *
+        </label>
+        <input
+          id="patient"
+          type="text"
+          formControlName="patient"
+          placeholder="Ingrese el nombre del paciente"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          [class.border-red-500]="appointmentForm.get('patient')?.invalid && appointmentForm.get('patient')?.touched"
+          [class.focus:ring-red-500]="appointmentForm.get('patient')?.invalid && appointmentForm.get('patient')?.touched"
+          [class.focus:border-red-500]="appointmentForm.get('patient')?.invalid && appointmentForm.get('patient')?.touched">
+        <div *ngIf="appointmentForm.get('patient')?.invalid && appointmentForm.get('patient')?.touched" class="mt-1 text-sm text-red-600">
+          <span *ngIf="appointmentForm.get('patient')?.hasError('required')">El nombre del paciente es requerido</span>
+          <span *ngIf="appointmentForm.get('patient')?.hasError('minlength')">El nombre debe tener al menos 2 caracteres</span>
+        </div>
+      </div>
+
+      <!-- Fecha -->
+      <div class="w-full">
+        <label for="date" class="block text-sm font-medium text-gray-700 mb-1">
+          Fecha *
+        </label>
+        <input
+          id="date"
+          type="date"
+          formControlName="date"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          [class.border-red-500]="appointmentForm.get('date')?.invalid && appointmentForm.get('date')?.touched"
+          [class.focus:ring-red-500]="appointmentForm.get('date')?.invalid && appointmentForm.get('date')?.touched"
+          [class.focus:border-red-500]="appointmentForm.get('date')?.invalid && appointmentForm.get('date')?.touched">
+        <div *ngIf="appointmentForm.get('date')?.invalid && appointmentForm.get('date')?.touched" class="mt-1 text-sm text-red-600">
+          <span *ngIf="appointmentForm.get('date')?.hasError('required')">La fecha es requerida</span>
+        </div>
+      </div>
+
+      <!-- Hora -->
+      <div class="w-full">
+        <label for="time" class="block text-sm font-medium text-gray-700 mb-1">
+          Hora *
+        </label>
+        <input
+          id="time"
+          type="time"
+          formControlName="time"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          [class.border-red-500]="appointmentForm.get('time')?.invalid && appointmentForm.get('time')?.touched"
+          [class.focus:ring-red-500]="appointmentForm.get('time')?.invalid && appointmentForm.get('time')?.touched"
+          [class.focus:border-red-500]="appointmentForm.get('time')?.invalid && appointmentForm.get('time')?.touched">
+        <div *ngIf="appointmentForm.get('time')?.invalid && appointmentForm.get('time')?.touched" class="mt-1 text-sm text-red-600">
+          <span *ngIf="appointmentForm.get('time')?.hasError('required')">La hora es requerida</span>
+        </div>
+      </div>
+
+      <!-- Notas -->
+      <div class="w-full">
+        <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">
+          Notas (opcional)
+        </label>
+        <textarea
+          id="notes"
+          formControlName="notes"
+          rows="3"
+          placeholder="Agregue notas adicionales..."
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"></textarea>
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="flex justify-end space-x-3 mt-6">
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="px-4 py-2 text-gray-700 bg-gray-200 border border-gray-300 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors duration-200">
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        [disabled]="appointmentForm.invalid"
+        class="px-4 py-2 text-white bg-blue-500 border border-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
+        Agregar Cita
+      </button>
+    </div>
+  </form>
+</div>

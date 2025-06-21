@@ -8,10 +8,11 @@
       [appointments]="appointments"
       (dateSelected)="onDateSelected($event)">
     </app-calendar-view>
-    <app-appointment-view
+    <app-appointment-list
       class="w-1/4 border-l pl-4"
       [selectedDate]="selectedDate"
-      [appointments]="appointments">
-    </app-appointment-view>
+      [appointments]="appointments"
+      (appointmentAdded)="onAppointmentAdded($event)">
+    </app-appointment-list>
   </div>
 </div>

@@ -10,6 +10,10 @@ export const routes: Routes = [
     loadComponent: () => import('./auth/register/register.component').then(c => c.RegisterComponent)
   },
   {
+    path: '',
+    loadComponent: () => import('./dashboard/dashboard.component').then(c => c.DashboardComponent)
+  },
+  {
     path: 'home',
     loadComponent: () => import('./dashboard/dashboard.component').then(c => c.DashboardComponent)
   },
@@ -23,7 +27,7 @@ export const routes: Routes = [
   },
   {
     path: 'appointments',
-    loadComponent: () => import('./appointments/appointment-list/appointment-list.component').then(c => c.AppointmentListComponent)
+    loadComponent: () => import('./appointments/appointment-view/appointment-view.component').then(c => c.AppointmentViewComponent)
   },
   {
     path: '',

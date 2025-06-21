@@ -1,0 +1,21 @@
+// Estilos específicos para la modal de citas
+.mat-mdc-dialog-container {
+  .mat-mdc-dialog-surface {
+    border-radius: 8px;
+  }
+}
+
+// Mejoras en los campos del formulario
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+// Espaciado entre elementos
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+// Botones con mejor espaciado
+.flex.justify-end.space-x-3 > * + * {
+  margin-left: 0.75rem;
+}

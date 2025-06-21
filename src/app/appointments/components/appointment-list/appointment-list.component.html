@@ -1,4 +1,11 @@
-<h2 class="text-xl font-semibold mb-4">Detalles del día</h2>
+<div class="flex justify-between items-center mb-4">
+  <h2 class="text-xl font-semibold">Detalles del día</h2>
+  <button
+    (click)="openAddAppointmentDialog()"
+    class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 transition cursor-pointer">
+    Agregar cita
+  </button>
+</div>
 
 @if(selectedDate) {
   <div>
