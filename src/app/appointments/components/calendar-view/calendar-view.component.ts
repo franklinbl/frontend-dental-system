@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-calendar-view',
@@ -8,11 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./calendar-view.component.scss']
 })
 export class CalendarViewComponent {
+  @Output() dateSelected = new EventEmitter<string>();
+  @Input() selectedDate: string | null = null;
+
   today = new Date();
   currentMonth = this.today.getMonth(); // Enero es 0
   currentYear = this.today.getFullYear();
-
-  selectedDate: string | null = new Date().toISOString().split('T')[0];
 
   // Array for calendar grid (6 weeks * 7 days = 42)
   calendarDays = Array.from({ length: 42 }, (_, i) => i);
@@ -38,7 +39,14 @@ export class CalendarViewComponent {
   selectDate(day: number): void {
     const month = (this.currentMonth + 1).toString().padStart(2, '0');
     const dayStr = day.toString().padStart(2, '0');
-    this.selectedDate = `${this.currentYear}-${month}-${dayStr}`;
+    const selectedDate = `${this.currentYear}-${month}-${dayStr}`;
+    this.dateSelected.emit(selectedDate);
+  }
+
+  isDaySelected(index: number, month: number, year: number): boolean {
+    if (!this.selectedDate) return false;
+    const dateStr = this.getDateString(index, month, year);
+    return dateStr === this.selectedDate;
   }
 
   getMonthName(monthIndex: number): string {
@@ -92,7 +100,6 @@ export class CalendarViewComponent {
     } else {
       this.currentMonth--;
     }
-    this.selectedDate = null; // Limpiar selección al cambiar de mes
   }
 
   goToNextMonth(): void {
@@ -102,6 +109,5 @@ export class CalendarViewComponent {
     } else {
       this.currentMonth++;
     }
-    this.selectedDate = null; // Limpiar selección al cambiar de mes
   }
 }

@@ -32,7 +32,10 @@
       <!-- Día real -->
       @if(isDayInMonth(index, currentMonth, currentYear)) {
         <div
-          class="border p-1 min-h-[80px] hover:bg-gray-100 cursor-pointer"
+          class="border p-1 min-h-[80px] hover:bg-gray-100 cursor-pointer transition-all duration-200"
+          [class.border-blue-500]="isDaySelected(index, currentMonth, currentYear)"
+          [class.border-2]="isDaySelected(index, currentMonth, currentYear)"
+          [class.bg-blue-50]="isDaySelected(index, currentMonth, currentYear)"
           (click)="selectDate(getDayNumber(index, currentMonth, currentYear))">
 
           <span class="font-medium">

@@ -10,4 +10,9 @@ import { AppointmentViewComponent } from '../components/appointment-view/appoint
   styleUrls: ['./appointment-list.component.scss']
 })
 export class AppointmentListComponent {
+  selectedDate: string | null = new Date().toISOString().split('T')[0];
+
+  onDateSelected(date: string): void {
+    this.selectedDate = date;
+  }
 }

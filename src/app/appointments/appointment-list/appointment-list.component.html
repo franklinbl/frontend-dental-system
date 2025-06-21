@@ -2,7 +2,14 @@
   <h2 class="text-2xl font-bold mb-14">Calendario de Citas</h2>
 
   <div class="flex">
-    <app-calendar-view class="w-3/4 pr-4"></app-calendar-view>
-    <app-appointment-view class="w-1/4 border-l pl-4"></app-appointment-view>
+    <app-calendar-view
+      class="w-3/4 pr-4"
+      [selectedDate]="selectedDate"
+      (dateSelected)="onDateSelected($event)">
+    </app-calendar-view>
+    <app-appointment-view
+      class="w-1/4 border-l pl-4"
+      [selectedDate]="selectedDate">
+    </app-appointment-view>
   </div>
 </div>
