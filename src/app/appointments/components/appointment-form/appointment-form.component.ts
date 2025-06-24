@@ -51,6 +51,9 @@ export class AppointmentFormComponent implements OnInit {
   ) {
     this.isEditMode = data.mode === 'edit';
 
+    // Inicializar la lista de pacientes inmediatamente
+    this.allPatients = this.appointmentService.allPatients;
+
     this.appointmentForm = this.fb.group({
       patientId: [null, Validators.required],
       patientDisplay: ['', [Validators.required, Validators.minLength(2)]],
@@ -61,7 +64,10 @@ export class AppointmentFormComponent implements OnInit {
 
     // Si es modo edición, cargar los datos de la cita
     if (this.isEditMode && data.appointment) {
-      this.loadAppointmentData(data.appointment);
+      // Pequeño delay para asegurar que allPatients esté disponible
+      setTimeout(() => {
+        this.loadAppointmentData(data.appointment);
+      }, 0);
     }
 
     // Suscribirse a cambios en el campo patientDisplay para filtrar
@@ -71,20 +77,34 @@ export class AppointmentFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.allPatients = this.appointmentService.allPatients;
+    // La inicialización ya se hace en el constructor
+
   }
 
   loadAppointmentData(appointment: any): void {
-    // Buscar el paciente en la lista de prueba usando patientId o patientName
-    const patient = this.allPatients.find(p =>
-      p.id === appointment.patientId ||
-      p.name === appointment.patientName ||
-      p.id?.toString() === appointment.patientId
-    );
+    // Buscar el paciente en la lista de prueba usando patientId
+    let patient = null;
+
+    if (appointment.patientId) {
+      patient = this.allPatients.find(p => p.id === appointment.patientId);
+    }
+
+    // Si no se encuentra por patientId, buscar por nombre
+    if (!patient && appointment.patientName) {
+      patient = this.allPatients.find(p => p.name === appointment.patientName);
+    }
+
+    // Si no se encuentra por patientName, buscar por patient (formato antiguo)
+    if (!patient && appointment.patient) {
+      patient = this.allPatients.find(p => p.name === appointment.patient);
+    }
 
     if (patient) {
       this.selectedPatient = patient;
       this.patientDisplayValue = `${patient.name} - ${patient.dni}`;
+    } else {
+      // Si no se encuentra el paciente, usar el patientName si existe
+      this.patientDisplayValue = appointment.patientName || appointment.patient || '';
     }
 
     // Convertir formato de hora si es necesario
@@ -92,7 +112,7 @@ export class AppointmentFormComponent implements OnInit {
 
     this.appointmentForm.patchValue({
       patientId: patient?.id || appointment.patientId || appointment.patient,
-      patientDisplay: this.patientDisplayValue || appointment.patientName || appointment.patient,
+      patientDisplay: this.patientDisplayValue,
       time: convertedTime,
       date: appointment.date,
       notes: appointment.notes || ''
@@ -229,6 +249,9 @@ export class AppointmentFormComponent implements OnInit {
         if (originalTime.includes('AM') || originalTime.includes('PM')) {
           formData.time = this.convertTo12HourFormat(this.appointmentForm.value.time);
         }
+      } else {
+        // Si es modo creación, siempre convertir a formato 12 horas
+        formData.time = this.convertTo12HourFormat(this.appointmentForm.value.time);
       }
 
       // Remover campos internos que no van al backend
