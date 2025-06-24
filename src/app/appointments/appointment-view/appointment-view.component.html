@@ -12,7 +12,8 @@
       class="w-1/4 border-l pl-4"
       [selectedDate]="selectedDate"
       [appointments]="appointments"
-      (appointmentAdded)="onAppointmentAdded($event)">
+      (appointmentAdded)="onAppointmentAdded($event)"
+      (appointmentUpdated)="onAppointmentUpdated($event)">
     </app-appointment-list>
   </div>
 </div>

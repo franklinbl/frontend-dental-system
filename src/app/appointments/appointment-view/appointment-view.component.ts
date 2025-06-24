@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CalendarViewComponent } from '../components/calendar-view/calendar-view.component';
 import { AppointmentListComponent } from '../components/appointment-list/appointment-list.component';
+import { AppointmentService } from '../../services/appointment.service';
+import { Appointments } from '../models/Appointments.model';
 
 @Component({
   selector: 'app-appointment-view',
@@ -9,39 +11,48 @@ import { AppointmentListComponent } from '../components/appointment-list/appoint
   templateUrl: './appointment-view.component.html',
   styleUrls: ['./appointment-view.component.scss']
 })
-export class AppointmentViewComponent {
+export class AppointmentViewComponent implements OnInit {
   selectedDate: string | null = new Date().toISOString().split('T')[0];
-  appointments = [
-    { date: '2025-06-05', patient: 'Ana López', time: '10:00 AM' },
-    { date: '2025-06-05', patient: 'Carlos M.', time: '11:00 AM' },
-    { date: '2025-06-10', patient: 'Laura G.', time: '09:30 AM' },
-    { date: '2025-06-15', patient: 'Javier R.', time: '02:00 PM' },
-  ];
+  appointments: Appointments[] = [];
+
+  constructor(private appointmentService: AppointmentService) {}
+
+  ngOnInit(): void {
+    // Suscribirse a los cambios en las citas
+    this.appointmentService.getAllAppointments().subscribe(appointments => {
+      this.appointments = appointments;
+    });
+  }
 
   onDateSelected(date: string): void {
     this.selectedDate = date;
   }
 
   onAppointmentAdded(newAppointment: any): void {
-    // Formatear la hora para mostrar en formato AM/PM
-    const time = newAppointment.time;
-    const [hours, minutes] = time.split(':');
-    const hour = parseInt(hours);
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const displayHour = hour % 12 || 12;
-    const formattedTime = `${displayHour}:${minutes} ${ampm}`;
-
-    // Crear el objeto de cita con el formato correcto
-    const appointment = {
+    // Crear la nueva cita usando el servicio
+    this.appointmentService.createAppointment({
       date: newAppointment.date,
-      patient: newAppointment.patient,
-      time: formattedTime,
-      type: newAppointment.type,
-      notes: newAppointment.notes
-    };
-    console.log(appointment);
+      patientId: newAppointment.patientId,
+      time: newAppointment.time,
+      notes: newAppointment.notes || ''
+    }).subscribe(appointment => {
+      console.log('Cita creada:', appointment);
+    });
+  }
 
-    // Agregar la nueva cita al array
-    this.appointments.push(appointment);
+  onAppointmentUpdated(updatedAppointment: any): void {
+    // Actualizar la cita usando el servicio
+    this.appointmentService.updateAppointment(updatedAppointment.id, {
+      date: updatedAppointment.date,
+      patientId: updatedAppointment.patientId,
+      time: updatedAppointment.time,
+      notes: updatedAppointment.notes || ''
+    }).subscribe(appointment => {
+      if (appointment) {
+        console.log('Cita actualizada:', appointment);
+      } else {
+        console.error('No se pudo actualizar la cita');
+      }
+    });
   }
 }

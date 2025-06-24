@@ -14,6 +14,7 @@ export class AppointmentListComponent {
   @Input() selectedDate: string | null = null;
   @Input() appointments: Appointments[] = [];
   @Output() appointmentAdded = new EventEmitter<any>();
+  @Output() appointmentUpdated = new EventEmitter<any>();
 
   constructor(private dialog: MatDialog) {}
 
@@ -24,13 +25,35 @@ export class AppointmentListComponent {
   openAddAppointmentDialog(): void {
     const dialogRef = this.dialog.open(AppointmentFormComponent, {
       width: '500px',
-      data: { selectedDate: this.selectedDate }
+      data: {
+        selectedDate: this.selectedDate,
+        mode: 'create'
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // Emitir la nueva cita al componente padre
         this.appointmentAdded.emit(result);
+      }
+    });
+  }
+
+  openEditAppointmentDialog(appointment: Appointments): void {
+    const dialogRef = this.dialog.open(AppointmentFormComponent, {
+      width: '500px',
+      data: {
+        selectedDate: this.selectedDate,
+        mode: 'edit',
+        appointment: appointment
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Emitir la cita actualizada al componente padre
+        console.log(result);
+        this.appointmentUpdated.emit(result);
       }
     });
   }

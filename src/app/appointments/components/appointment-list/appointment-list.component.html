@@ -11,8 +11,10 @@
   <div>
     <h3 class="text-lg mb-2">{{ selectedDate }}</h3>
     @for(appointment of getAppointmentsForDate(selectedDate); track $index) {
-      <div class="bg-white p-3 rounded shadow mb-2 border border-gray-200">
-        <div class="font-medium">{{ appointment.patient }}</div>
+      <div
+        class="bg-white p-3 rounded shadow mb-2 border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors"
+        (click)="openEditAppointmentDialog(appointment)">
+        <div class="font-medium">{{ appointment.patientName }}</div>
         <div class="text-sm text-gray-600">{{ appointment.time }}</div>
       </div>
     }
