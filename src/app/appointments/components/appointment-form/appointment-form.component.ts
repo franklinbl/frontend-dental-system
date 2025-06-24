@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
@@ -6,12 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-
-interface Patient {
-  id: number;
-  name: string;
-  dni: string;
-}
+import { Patient } from '../../../patients/models/Patient.model';
+import { AppointmentService } from '../../../services/appointment.service';
 
 interface DialogData {
   selectedDate: string | null;
@@ -34,24 +30,13 @@ interface DialogData {
   templateUrl: './appointment-form.component.html',
   styleUrls: ['./appointment-form.component.scss']
 })
-export class AppointmentFormComponent {
+export class AppointmentFormComponent implements OnInit {
   appointmentForm: FormGroup;
   isEditMode = false;
   isEditing = false;
 
   // Datos de prueba
-  allPatients: Patient[] = [
-    { id: 1, name: 'Juan Pérez', dni: '12345678' },
-    { id: 2, name: 'María García', dni: '23456789' },
-    { id: 3, name: 'Carlos López', dni: '34567890' },
-    { id: 4, name: 'Ana Rodríguez', dni: '45678901' },
-    { id: 5, name: 'Luis Martínez', dni: '56789012' },
-    { id: 6, name: 'Carmen Sánchez', dni: '67890123' },
-    { id: 7, name: 'Roberto Torres', dni: '78901234' },
-    { id: 8, name: 'Isabel Morales', dni: '89012345' },
-    { id: 9, name: 'Fernando Silva', dni: '90123456' },
-    { id: 10, name: 'Patricia Vargas', dni: '01234567' }
-  ];
+  allPatients: Patient[] = [];
 
   filteredPatients: Patient[] = [];
   showDropdown = false;
@@ -61,7 +46,8 @@ export class AppointmentFormComponent {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AppointmentFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private appointmentService: AppointmentService
   ) {
     this.isEditMode = data.mode === 'edit';
 
@@ -84,9 +70,17 @@ export class AppointmentFormComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.allPatients = this.appointmentService.allPatients;
+  }
+
   loadAppointmentData(appointment: any): void {
-    // Buscar el paciente en la lista de prueba
-    const patient = this.allPatients.find(p => p.name === appointment.patient || p.id.toString() === appointment.patient);
+    // Buscar el paciente en la lista de prueba usando patientId o patientName
+    const patient = this.allPatients.find(p =>
+      p.id === appointment.patientId ||
+      p.name === appointment.patientName ||
+      p.id?.toString() === appointment.patientId
+    );
 
     if (patient) {
       this.selectedPatient = patient;
@@ -97,8 +91,8 @@ export class AppointmentFormComponent {
     const convertedTime = this.convertTimeFormat(appointment.time);
 
     this.appointmentForm.patchValue({
-      patientId: patient?.id || appointment.patient,
-      patientDisplay: this.patientDisplayValue || appointment.patient,
+      patientId: patient?.id || appointment.patientId || appointment.patient,
+      patientDisplay: this.patientDisplayValue || appointment.patientName || appointment.patient,
       time: convertedTime,
       date: appointment.date,
       notes: appointment.notes || ''
@@ -223,11 +217,13 @@ export class AppointmentFormComponent {
       // Crear el objeto a enviar con el ID del paciente
       const formData = {
         ...this.appointmentForm.value,
-        patient: this.appointmentForm.value.patientId
+        patientId: this.appointmentForm.value.patientId
       };
 
-      // Si es modo edición, mantener el formato original de la hora
+      // Si es modo edición, incluir el ID de la cita y mantener el formato original de la hora
       if (this.isEditMode && this.data.appointment) {
+        formData.id = this.data.appointment.id; // Agregar el ID de la cita
+
         const originalTime = this.data.appointment.time;
         // Si la hora original tenía AM/PM, convertir de vuelta al formato original
         if (originalTime.includes('AM') || originalTime.includes('PM')) {
@@ -236,7 +232,6 @@ export class AppointmentFormComponent {
       }
 
       // Remover campos internos que no van al backend
-      delete formData.patientId;
       delete formData.patientDisplay;
 
       this.dialogRef.close(formData);

@@ -1,27 +1,42 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Appointments } from '../appointments/models/Appointments.model';
+import { Patient } from '../patients/models/Patient.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentService {
+  // Lista de pacientes de prueba
+  public allPatients: Patient[] = [
+    { id: 1, name: 'Juan Pérez', dni: '12345678', birthDate: new Date().toISOString() },
+    { id: 2, name: 'María García', dni: '23456789', birthDate: new Date().toISOString() },
+    { id: 3, name: 'Carlos López', dni: '34567890', birthDate: new Date().toISOString() },
+    { id: 4, name: 'Ana Rodríguez', dni: '45678901', birthDate: new Date().toISOString() },
+    { id: 5, name: 'Luis Martínez', dni: '56789012', birthDate: new Date().toISOString() },
+    { id: 6, name: 'Carmen Sánchez', dni: '67890123', birthDate: new Date().toISOString() },
+    { id: 7, name: 'Roberto Torres', dni: '78901234', birthDate: new Date().toISOString() },
+    { id: 8, name: 'Isabel Morales', dni: '89012345', birthDate: new Date().toISOString() },
+    { id: 9, name: 'Fernando Silva', dni: '90123456', birthDate: new Date().toISOString() },
+    { id: 10, name: 'Patricia Vargas', dni: '01234567', birthDate: new Date().toISOString() }
+  ];
+
   private appointments: Appointments[] = [
-    { id: 1, date: '2025-06-15', patientName: 'Ana López', patientId: 1, time: '10:00 AM', notes: 'Consulta de rutina' },
-    { id: 2, date: '2025-06-15', patientName: 'Carlos M.', patientId: 2, time: '11:00 AM', notes: 'Limpieza dental' },
-    { id: 3, date: '2025-06-16', patientName: 'Laura G.', patientId: 3, time: '09:30 AM', notes: 'Extracción de muela' },
-    { id: 4, date: '2025-06-16', patientName: 'Javier R.', patientId: 4, time: '02:00 PM', notes: 'Ortodoncia' },
-    { id: 5, date: '2025-06-17', patientName: 'María S.', patientId: 5, time: '08:00 AM', notes: 'Empaste dental' },
-    { id: 6, date: '2025-06-17', patientName: 'Roberto T.', patientId: 6, time: '03:30 PM', notes: 'Consulta de emergencia' },
-    { id: 7, date: '2025-06-18', patientName: 'Carmen V.', patientId: 7, time: '10:30 AM', notes: 'Blanqueamiento' },
-    { id: 8, date: '2025-06-18', patientName: 'Fernando W.', patientId: 8, time: '01:00 PM', notes: 'Revisión post-tratamiento' },
-    { id: 9, date: '2025-06-19', patientName: 'Isabel X.', patientId: 9, time: '11:30 AM', notes: 'Consulta de rutina' },
-    { id: 10, date: '2025-06-19', patientName: 'Luis Y.', patientId: 10, time: '04:00 PM', notes: 'Endodoncia' },
-    { id: 11, date: '2025-06-20', patientName: 'Patricia Z.', patientId: 11, time: '09:00 AM', notes: 'Limpieza dental' },
-    { id: 12, date: '2025-06-20', patientName: 'Miguel A.', patientId: 12, time: '02:30 PM', notes: 'Consulta de ortodoncia' },
-    { id: 13, date: '2025-06-21', patientName: 'Sofia B.', patientId: 13, time: '10:00 AM', notes: 'Extracción de cordal' },
-    { id: 14, date: '2025-06-21', patientName: 'Diego C.', patientId: 14, time: '03:00 PM', notes: 'Empaste dental' },
-    { id: 15, date: '2025-06-22', patientName: 'Valentina D.', patientId: 15, time: '08:30 AM', notes: 'Consulta de rutina' }
+    { id: 1, date: '2025-06-15', patientName: 'Juan Pérez', patientId: 1, time: '10:00 AM', notes: 'Consulta de rutina' },
+    { id: 2, date: '2025-06-15', patientName: 'María García', patientId: 2, time: '11:00 AM', notes: 'Limpieza dental' },
+    { id: 3, date: '2025-06-16', patientName: 'Carlos López', patientId: 3, time: '09:30 AM', notes: 'Extracción de muela' },
+    { id: 4, date: '2025-06-16', patientName: 'Ana Rodríguez', patientId: 4, time: '02:00 PM', notes: 'Ortodoncia' },
+    { id: 5, date: '2025-06-17', patientName: 'Luis Martínez', patientId: 5, time: '08:00 AM', notes: 'Empaste dental' },
+    { id: 6, date: '2025-06-17', patientName: 'Carmen Sánchez', patientId: 6, time: '03:30 PM', notes: 'Consulta de emergencia' },
+    { id: 7, date: '2025-06-18', patientName: 'Roberto Torres', patientId: 7, time: '10:30 AM', notes: 'Blanqueamiento' },
+    { id: 8, date: '2025-06-18', patientName: 'Isabel Morales', patientId: 8, time: '01:00 PM', notes: 'Revisión post-tratamiento' },
+    { id: 9, date: '2025-06-19', patientName: 'Fernando Silva', patientId: 9, time: '11:30 AM', notes: 'Consulta de rutina' },
+    { id: 10, date: '2025-06-19', patientName: 'Patricia Vargas', patientId: 10, time: '04:00 PM', notes: 'Endodoncia' },
+    { id: 11, date: '2025-06-20', patientName: 'Juan Pérez', patientId: 1, time: '09:00 AM', notes: 'Limpieza dental' },
+    { id: 12, date: '2025-06-20', patientName: 'María García', patientId: 2, time: '02:30 PM', notes: 'Consulta de ortodoncia' },
+    { id: 13, date: '2025-06-21', patientName: 'Carlos López', patientId: 3, time: '10:00 AM', notes: 'Extracción de cordal' },
+    { id: 14, date: '2025-06-21', patientName: 'Ana Rodríguez', patientId: 4, time: '03:00 PM', notes: 'Empaste dental' },
+    { id: 15, date: '2025-07-22', patientName: 'Luis Martínez', patientId: 5, time: '08:30 AM', notes: 'Consulta de rutina' }
   ];
 
   private appointmentsSubject = new BehaviorSubject<Appointments[]>(this.appointments);
@@ -54,9 +69,14 @@ export class AppointmentService {
   // Crear nueva cita
   createAppointment(appointment: Omit<Appointments, 'id'>): Observable<Appointments> {
     const newId = Math.max(...this.appointments.map(appt => appt.id || 0)) + 1;
+
+    // Buscar el nombre del paciente basado en el patientId
+    const patient = this.allPatients.find(p => p.id === appointment.patientId);
+
     const newAppointment: Appointments = {
       ...appointment,
       id: newId,
+      patientName: patient?.name || 'Paciente desconocido',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
@@ -81,10 +101,14 @@ export class AppointmentService {
       });
     }
 
+    // Buscar el nombre del paciente basado en el patientId
+    const patient = this.allPatients.find(p => p.id === appointment.patientId);
+
     const updatedAppointment: Appointments = {
       ...this.appointments[index],
       ...appointment,
       id, // Mantener el ID original
+      patientName: patient?.name || this.appointments[index].patientName,
       updatedAt: new Date().toISOString()
     };
 
