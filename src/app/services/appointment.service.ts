@@ -36,7 +36,7 @@ export class AppointmentService {
     { id: 12, date: '2025-06-20', patientName: 'María García', patientId: 2, time: '02:30 PM', notes: 'Consulta de ortodoncia' },
     { id: 13, date: '2025-06-21', patientName: 'Carlos López', patientId: 3, time: '10:00 AM', notes: 'Extracción de cordal' },
     { id: 14, date: '2025-06-21', patientName: 'Ana Rodríguez', patientId: 4, time: '03:00 PM', notes: 'Empaste dental' },
-    { id: 15, date: '2025-07-22', patientName: 'Luis Martínez', patientId: 5, time: '08:30 AM', notes: 'Consulta de rutina' }
+    { id: 15, date: '2025-06-22', patientName: 'Luis Martínez', patientId: 5, time: '08:30 AM', notes: 'Consulta de rutina' }
   ];
 
   private appointmentsSubject = new BehaviorSubject<Appointments[]>(this.appointments);
