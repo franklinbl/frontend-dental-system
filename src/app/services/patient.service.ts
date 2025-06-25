@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Patient } from '../patients/models/Patient.model';
+import { PatientSearchResponse } from '../patients/models/Patient.model';
 
 @Injectable({ providedIn: 'root' })
 export class PatientService {
@@ -27,5 +28,9 @@ export class PatientService {
 
   delete(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  searchPatients(searchTerm: string): Observable<PatientSearchResponse> {
+    return this.http.get<PatientSearchResponse>(`${this.apiUrl}/searchPatients?searchTerm=${encodeURIComponent(searchTerm)}`);
   }
 }

@@ -20,3 +20,10 @@ export interface Patient {
   toothRecords?: any[];
   treatmentRecords?: any[];
 }
+
+export interface PatientSearchResponse {
+  success: boolean;
+  data: Patient[];
+  total: number;
+  message: string;
+}

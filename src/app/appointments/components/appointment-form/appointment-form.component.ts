@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+  import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Patient } from '../../../patients/models/Patient.model';
 import { AppointmentService } from '../../../services/appointment.service';
 import { UsersService } from '../../../services/users.service';
+import { PatientService } from '../../../services/patient.service';
 import { Dentist } from '../../../users/models/users.model';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -39,7 +40,7 @@ export class AppointmentFormComponent implements OnInit {
   isEditMode = false;
   isEditing = false;
 
-  // Datos de prueba para pacientes
+  // Lista de pacientes cargados desde el backend
   allPatients: Patient[] = [];
 
   // Lista de dentistas cargados desde el backend
@@ -54,18 +55,17 @@ export class AppointmentFormComponent implements OnInit {
   patientDisplayValue = '';
   dentistDisplayValue = '';
   isLoadingDentists = false;
+  isLoadingPatients = false;
 
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AppointmentFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private appointmentService: AppointmentService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private patientService: PatientService
   ) {
     this.isEditMode = data.mode === 'edit';
-
-    // Inicializar la lista de pacientes inmediatamente
-    this.allPatients = this.appointmentService.allPatients;
 
     this.appointmentForm = this.fb.group({
       patientId: [null, Validators.required],
@@ -85,9 +85,30 @@ export class AppointmentFormComponent implements OnInit {
       }, 0);
     }
 
-    // Suscribirse a cambios en el campo patientDisplay para filtrar
-    this.appointmentForm.get('patientDisplay')?.valueChanges.subscribe(value => {
-      this.filterPatients(value);
+    // Suscribirse a cambios en el campo patientDisplay para buscar pacientes en el backend
+    this.appointmentForm.get('patientDisplay')?.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(value => {
+        if (value && value.length >= 2) {
+          this.isLoadingPatients = true;
+          return this.patientService.searchPatients(value);
+        } else {
+          this.filteredPatients = [];
+          this.isLoadingPatients = false;
+          return of(null);
+        }
+      })
+    ).subscribe(response => {
+      this.isLoadingPatients = false;
+      if (response && response.success) {
+        this.allPatients = response.data;
+        this.filteredPatients = response.data;
+        this.showDropdown = response.data.length > 0;
+      } else {
+        this.filteredPatients = [];
+        this.showDropdown = false;
+      }
     });
 
     // Suscribirse a cambios en el campo dentistDisplay para buscar dentistas en el backend
@@ -122,8 +143,8 @@ export class AppointmentFormComponent implements OnInit {
   }
 
   loadAppointmentData(appointment: any): void {
-    // Buscar el paciente en la lista de prueba usando patientId o patientName
-    const patient = this.allPatients.find(p =>
+    // Buscar el paciente en la lista actual o cargarlo desde el backend
+    let patient = this.allPatients.find(p =>
       p.id === appointment.patientId ||
       p.name === appointment.patientName ||
       p.id?.toString() === appointment.patientId
@@ -133,8 +154,27 @@ export class AppointmentFormComponent implements OnInit {
       this.selectedPatient = patient;
       this.patientDisplayValue = `${patient.name} - ${patient.dni}`;
     } else {
-      // Si no se encuentra el paciente, usar el patientName si existe
-      this.patientDisplayValue = appointment.patientName || appointment.patient || '';
+      // Si no se encuentra el paciente en la lista actual, intentar cargarlo desde el backend
+      const patientId = appointment.patientId;
+      if (patientId) {
+        // Buscar por ID en el backend
+        this.patientService.getById(patientId).subscribe(patientData => {
+          patient = patientData;
+          this.selectedPatient = patient;
+          this.patientDisplayValue = `${patient.name} - ${patient.dni}`;
+
+          // Actualizar el formulario con los datos del paciente
+          this.appointmentForm.patchValue({
+            patientId: patient.id,
+            patientDisplay: this.patientDisplayValue
+          });
+        }, error => {
+          console.error('Error cargando paciente:', error);
+          this.patientDisplayValue = appointment.patientName || appointment.patient || '';
+        });
+      } else {
+        this.patientDisplayValue = appointment.patientName || appointment.patient || '';
+      }
     }
 
     // Buscar el dentista en la lista actual o cargarlo desde el backend
